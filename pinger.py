@@ -52,12 +52,6 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         icmp_header = recPacket[20:28]
         type, code, checksum, id, sequence = struct.unpack("bbHHh", icmp_header)
 
-        if ID is id:
-            timeStamp = struct.unpack('d', recPacket[28:36])[0]
-            delay = timeReceived - timeStamp
-            return delay
-
-
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
@@ -126,10 +120,10 @@ def ping(host, timeout=1):
     packet_recv = 0
     #fill in start. UPDATE THE QUESTION MARKS
     for index, row in response.iterrows():
-        if ???? == 0: #access your response df to determine if you received a packet or not
-            packet_lost = #????
+        if row['rtt'] == 0: #access your response df to determine if you received a packet or not
+            packet_lost = packet_lost + 1
         else:
-            packet_recv = #????
+            packet_recv = packet_recv + 1
     #fill in end
 
     #You should have the values of delay for each ping here structured in a pandas dataframe; 
