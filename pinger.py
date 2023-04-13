@@ -57,13 +57,11 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         icmp_header = recPacket[20:28]
         type, code, checksum, id, sequence = struct.unpack("bbHHh", icmp_header)
 
-
         if id == ID:
             formatted_bytes = struct.calcsize("d")
             sending_time =  struct.unpack("d", recPacket[28:28 + formatted_bytes])[0]
             round_trip_delay= (timeReceived -sending_time) * 1000
-            return round_trip_delay
-            return [recPacket[8], addr[0]]
+            return round_trip_delay, [recPacket[8], addr[0]]
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
