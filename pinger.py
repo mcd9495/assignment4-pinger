@@ -61,8 +61,8 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         if id == ID:
             formatted_bytes = struct.calcsize("d")
             TOTAL_TRIP_TIME = struct.unpack("d", recPacket[28:28 + formatted_bytes])[0]
-            round_trip_delay= (timeReceived - TOTAL_TRIP_TIME) * 1000
-            return round_trip_delay, [recPacket[8], addr[0]]
+            ROUND_TRIP_TIME= (timeReceived - TOTAL_TRIP_TIME) * 1000
+            return ROUND_TRIP_TIME, [recPacket[8], addr[0]]
 
         # Fill in end
         timeLeft = timeLeft - howLongInSelect
