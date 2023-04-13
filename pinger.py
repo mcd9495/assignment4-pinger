@@ -10,11 +10,11 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 ICMP_ECHO_REQUEST = 8
-'''ICMP_ECHO_REPLY = 0
+ICMP_ECHO_REPLY = 0
 
 SIZE = 0
 TOTAL_TRIP_TIME = 0
-ROUND_TRIP_TIME = 0'''
+ROUND_TRIP_TIME = 0
 
 def checksum(string):
     csum = 0
@@ -56,10 +56,11 @@ def receiveOnePing(mySocket, ID, timeout, destAddr):
         # Fetch the ICMP header from the IP packet
         icmp_header = recPacket[20:28]
         type, code, checksum, id, sequence = struct.unpack("bbHHh", icmp_header)
+        round_trip_delay = 0
 
         if id == ID:
             formatted_bytes = struct.calcsize("d")
-            sending_time =  struct.unpack("d", recPacket[28:28 + formatted_bytes])[0]
+            TOTAL_TRIP_TIME = struct.unpack("d", recPacket[28:28 + formatted_bytes])[0]
             round_trip_delay= (timeReceived -sending_time) * 1000
             return round_trip_delay, [recPacket[8], addr[0]]
 
